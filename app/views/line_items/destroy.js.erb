@@ -1,2 +1,6 @@
 
-$('#cart').html("<%= j (render partial: @line_item) %>")
+$('#cart').html("<%=j render(@cart) %>");
+
+if ($('#cart tr').length == 1 ) { $('#cart').hide(); }
+
+$('#current_item').css({'background-color':'#88ff88'}).animate({'background-color':'#114411'}, 1000);

@@ -1,6 +1,6 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :destroy]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
   # GET /line_items
@@ -59,7 +59,7 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1.json
   def destroy
     if params[:delete_once] == "true"
-      @line_item.quantity < 1 ? @line_item.destroy : @line_item.quantity -= 1
+      @line_item.quantity > 1 ?  @line_item.quantity -= 1 : @line_item.destroy 
       @line_item.save
     else
       @line_item.destroy
