@@ -41,8 +41,8 @@ Rails.application.configure do
     port: 587,
     domain: "domain.of.sender.net",
     authentication: "plain",
-    user_name: "minhhieu160498@gmail.com",
-    password: "txwuubelwqmogqlb",
+    user_name: "minhhieu16498@gmail.com",
+    password: "Nguoitanoi123",
     enable_starttls_auto: true,
   }
   # Print deprecation notices to the Rails logger.
