@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :current_user, only: [:update]
   # GET /users
   # GET /users.json
   def index
@@ -40,13 +40,20 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to users_url, notice: "User #{@user.name} was successfully created." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    if @current_user.authenticate(params[:user][:old_password])
+      respond_to do |format|
+        if @user.update(user_params)
+          format.html { redirect_to users_url, notice: "User #{@user.name} was successfully created." }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      # binding.pry
+      respond_to do |format|
+        format.html { redirect_to edit_user_url , notice: "Current password not match!" }
       end
     end
   end
